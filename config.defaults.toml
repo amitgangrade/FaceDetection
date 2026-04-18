@@ -1,0 +1,66 @@
+# FaceDetect default configuration. Copy to config.toml to override.
+
+[paths]
+data_dir = "data"
+models_dir = "models"
+logs_dir = "logs"
+
+[camera]
+device_index = 0
+frame_width = 1280
+frame_height = 720
+
+[detector]
+det_size = 640
+det_score_threshold = 0.8
+
+[quality]
+# Enrollment (strict).
+min_face_size_px = 112
+min_laplacian_var = 60.0
+min_brightness = 40.0
+max_brightness = 220.0
+edge_margin_px = 8
+# Recognition (relaxed).
+min_face_size_px_recognition = 80
+min_laplacian_var_recognition = 30.0
+
+[liveness]
+# Passive (MiniFASNet) — disabled gracefully if model absent.
+passive_enabled = true
+passive_spoof_threshold = 0.5
+passive_every_n_frames = 5
+# Active blink detection uses the 10-point eye contours from InsightFace's
+# 106-point landmarks. The ratio is eye-height / eye-width:
+#   ~0.30-0.40 = wide open
+#   ~0.15-0.20 = half-closed
+#   ~0.05-0.10 = fully closed
+# Tune if blinks aren't registering (lower `blink_ear_closed`) or if blinks
+# fire spuriously (raise both thresholds).
+blink_ear_closed = 0.15
+blink_ear_open = 0.22
+blink_required_for_enrollment = true
+
+[enrollment]
+preflight_hold_seconds = 3.0
+per_pose_hold_seconds = 3.0
+max_samples = 30
+min_accepted_samples = 8
+outlier_cosine_cap = 0.5
+poses = ["front", "left", "right", "up", "down", "expression"]
+
+[recognition]
+match_threshold = 0.40
+uncertain_threshold = 0.30
+smoothing_window = 7
+smoothing_min_agree = 4
+tracker_iou_threshold = 0.3
+event_debounce_seconds = 300
+
+[events]
+save_unknown_snapshots = true
+snapshot_jpeg_quality = 85
+
+[ui]
+window_title = "FaceDetect"
+draw_landmarks = false

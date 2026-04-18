@@ -1,0 +1,32 @@
+[project]
+name = "facedetect"
+version = "0.1.0"
+description = "Face detection and recognition desktop app with anti-spoof enrollment."
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "insightface>=0.7.3",
+    "onnxruntime-directml>=1.17.0",
+    "opencv-python>=4.9.0",
+    "numpy>=1.26",
+    "pillow>=10.0.0",
+    "requests>=2.31.0",
+    "psutil>=5.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[project.scripts]
+facedetect = "facedetect.__main__:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+facedetect = ["../schema.sql"]
